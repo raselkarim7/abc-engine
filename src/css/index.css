@@ -2,7 +2,8 @@
 :root {
   --BTN_COLOR: #0085ba;
   --BTN_COLOR_HOVER: #066388;
-  --white: #ffffff;
+  --HEADING-COLOR: #0085ba;
+  /* --HEADING-COLOR: #92d7e9; */
 }
 
 
@@ -38,7 +39,7 @@ body {
 .mt-4 {
   margin-top: 20px;
 }
-.mt-4 {
+.mt-5 {
   margin-top: 25px;
 }
 
@@ -58,8 +59,6 @@ body {
 .mb-4 {
   margin-bottom: 25px;
 }
-
-
 
 
 
@@ -110,21 +109,22 @@ input[type=submit]:hover {
 .container {
   border-radius: 5px;
   background-color: #fff;
-  padding: 20px;
+  padding: 0px 20px 5px;
 }
 
 .col-25 {
   float: left;
   width: 25%;
-  margin-top: 6px;
 }
 
 .col-75 {
   float: left;
   width: 75%;
-  margin-top: 6px;
 }
 
+.row {
+  margin-bottom: 20px;
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -134,8 +134,43 @@ input[type=submit]:hover {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
+  .App {
+    width: 90%;
+  }
   .col-25, .col-75, input[type=submit] {
     width: 100%;
     margin-top: 0;
   }
+  .heading-one {
+    text-align: center;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+
+  .row label {
+    padding: 12px 12px 6px 0
+  }
+
+  .row:last-child {
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+  }
+}
+
+
+.heading-one {
+  font-size: 40px;
+  font-weight: 400;
+  margin: 10px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  color: var(--HEADING-COLOR);
+}
+
+hr.line-below-heading {
+  margin: 5px 0px 10px 0px;
+  border-top: 1px solid var(--HEADING-COLOR);
+  
 }

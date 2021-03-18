@@ -3,8 +3,9 @@ import React from 'react'
 const StepOne = () => {
     return (
         <div>
-            <h2 className="mt-2 mb-1">Step 1</h2>
-            <div className="container">
+            <div className="container mt-5">
+            <h1 className="mt-2 mb-1 heading-one">Step 1</h1>
+            <hr className="line-below-heading" />
                 <form onSubmit={(event) => event.preventDefault()}>
                     <div className="row">
                         <div className="col-25">
@@ -44,7 +45,7 @@ const StepOne = () => {
 
 
 
-                    <div className="row mt-2">
+                    <div className="row mt-2 pb-2">
                         <input type="submit" value="Submit" />
                     </div>
                 </form>
