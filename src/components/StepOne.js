@@ -21,7 +21,7 @@ const StepOne = () => {
                             <label htmlFor="project-description">Project Description</label>
                         </div>
                         <div className="col-75">
-                            <textarea id="subject" name="project-description" placeholder="Write Project Description..." style={{ height: "200px", }} ></textarea>
+                            <textarea id="subject" name="project-description" placeholder="Write Project Description..." style={{ height: "150px", }} ></textarea>
                         </div>
                     </div>
 
