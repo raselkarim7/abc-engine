@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
     
 const StepTwo = (props) => {
-
+    const [wholeCsvRows, setWholeCsvRows] = useState( {} )
     const [csvData, setCsvData] = useState({
         max_x: '',
         min_x: '',
@@ -12,6 +12,8 @@ const StepTwo = (props) => {
         max_z: '',
         min_z: '',
     })
+
+
 
     
     const [csvDataError, setCsvDataError] = useState({
@@ -68,7 +70,7 @@ const StepTwo = (props) => {
                     let headings = row.split(',')
                     if (i === 0) {
                         for(let index in headings) {
-                            csvObj [index] = {colName: `${headings[index]}`.toLowerCase(), values: []}
+                            csvObj [index] = {colName: `${headings[index]}`.toLowerCase(), values: []} // {colName: 'kp', values:[]}
                         }
                     } else {
                         for(let index in headings) {
@@ -78,7 +80,7 @@ const StepTwo = (props) => {
                                     values: [
                                         ...csvObj[index].values, parseFloat(headings[index]) 
                                     ]
-                                }
+                                } // {colName: 'kp', values:[0,1,2,3.......]} like obj
                             }
                         }
                     }
@@ -88,11 +90,10 @@ const StepTwo = (props) => {
                 for (let key in csvObj) {
                     keyByCsv[ csvObj[key].colName ] = csvObj[key].values.sort((a, b) => a - b)
                 }
+                console.log('keyByCsv ---------->> ', keyByCsv)
 
                 function getData(param) {
                     const [type, key] = param.split('_')
-                    console.log('type ==== ', type, 'key === ', key)
-
                     if (type === 'max') {
                         return keyByCsv[key][ keyByCsv[key].length - 1 ]
                     }
@@ -109,7 +110,7 @@ const StepTwo = (props) => {
                     max_z: getData('max_z'),
                     min_z: getData('min_z'),
                 }
-
+                setWholeCsvRows( keyByCsv )
                 setCsvData( output )
             }
         }
@@ -118,9 +119,11 @@ const StepTwo = (props) => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault()
+
+        
        
         // props.setStep(2)
-        console.log('here comes the code .............')
+        console.log('here comes the code .............', csvDataError)
     }
 
     const checkMultipleDots = function (param) {
