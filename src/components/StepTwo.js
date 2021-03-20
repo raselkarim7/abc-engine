@@ -159,8 +159,19 @@ const StepTwo = (props) => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault()
+        let hasError = false
+        for (let key in csvDataError) {
+            const msg = csvDataError[ key ]
+            if (msg !== "") {
+                hasError = true
+                break
+            }
+            console.log("msg ----> ", msg)
+        }
 
-        
+        if (hasError === false) {
+            props.setStep(3)
+        }
        
         // props.setStep(2)
         console.log('here comes the code csvDataError.............', csvDataError)
@@ -322,7 +333,7 @@ const StepTwo = (props) => {
                     </div>
 
                     <div className="row mt-2 pb-2">
-                        <input type="submit" value="Submit" />
+                        <input type="submit" value="Next" />
                     </div>
                 </form>
             </div>
