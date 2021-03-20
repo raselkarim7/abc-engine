@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
     
 const StepTwo = (props) => {
-    const [wholeCsvRows, setWholeCsvRows] = useState( {} )
+
     const [csvData, setCsvData] = useState({
         max_x: '',
         min_x: '',
@@ -132,8 +132,9 @@ const StepTwo = (props) => {
                 max_z: getData('max_z'),
                 min_z: getData('min_z'),
             }
-            setWholeCsvRows( keyByCsv )
             setCsvData( output )
+            props.setWholeCsvRows( keyByCsv )
+            props.setSecondFormValues( output )
         }
     }
 
@@ -221,11 +222,14 @@ const StepTwo = (props) => {
         return false
     } 
 
+
+    const handleGoBack = ( event ) => {
+        event.preventDefault()
+        props.setStep(1)
+    }
+
     return (
-        <div>
-            {
-                JSON.stringify(csvData)
-            }
+        <div>   
             <div className="container mt-5">
             <h1 className="mt-2 mb-1 heading-one">Step 2</h1>
             <hr className="line-below-heading" />
@@ -332,8 +336,12 @@ const StepTwo = (props) => {
                         </div>
                     </div>
 
-                    <div className="row mt-2 pb-2">
-                        <input type="submit" value="Next" />
+                    <div className="step-two-lastrow mt-2 pb-2">
+                        <div></div>
+                        <div className="right" >
+                            <button className="primary-btn " onClick={handleGoBack}> Go Back </button>    
+                            <input type="submit" value="Next" />
+                        </div>
                     </div>
                 </form>
             </div>

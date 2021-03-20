@@ -20,7 +20,7 @@ const StepOne = (props) => {
                 return
             }
         }
-
+        props.setFirstFormValues( project )
         props.setStep(2)
 
         console.log('here comes the code .............')

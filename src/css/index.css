@@ -2,6 +2,10 @@
 :root {
   --BTN_COLOR: #0085ba;
   --BTN_COLOR_HOVER: #066388;
+
+  --PRIMAY_BTN_COLOR: #d1d1d1;
+  --PRIMARY_BTN_COLOR_HOVER: #b9b9b9;
+  
   --HEADING-COLOR: #0085ba;
   /* --HEADING-COLOR: #92d7e9; */
 }
@@ -60,7 +64,17 @@ body {
   margin-bottom: 25px;
 }
 
+.p-2 {
+  padding: 10px;
+}
 
+.m-2 {
+  margin: 10px;
+}
+
+.border {
+  border: 1px solid red;
+}
 
 
 
@@ -92,7 +106,7 @@ label {
   display: inline-block;
 }
 
-input[type=submit] {
+input[type=submit], .primary-btn {
   background-color:  var(--BTN_COLOR);
   color: white;
   padding: 12px 20px;
@@ -105,6 +119,17 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: var(--BTN_COLOR_HOVER);
 }
+
+.primary-btn {
+  background-color:  var(--PRIMAY_BTN_COLOR);
+  color: black;
+}
+
+.primary-btn:hover {
+  background-color:  var(--PRIMARY_BTN_COLOR_HOVER);
+}
+
+
 
 .container {
   border-radius: 5px;
@@ -132,6 +157,17 @@ input[type=submit]:hover {
   clear: both;
 }
 
+.step-two-lastrow {
+  display: flex;
+  justify-content: space-between;
+}
+.step-two-lastrow .right{
+  display: flex;
+  gap: 10px;
+}
+
+
+
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .App {
@@ -153,10 +189,22 @@ input[type=submit]:hover {
     padding: 12px 12px 6px 0
   }
 
-  .row:last-child {
+  
+
+  .row:last-child{
     padding-top: 10px;
     padding-bottom: 20px;
-
+  }
+  .step-two-lastrow {
+    margin-bottom: 20px;
+  }
+  .step-two-lastrow, .step-two-lastrow .right {
+    width: 100%;
+    display: inline-block;
+  }
+  .primary-btn {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }
 
@@ -186,4 +234,26 @@ hr.line-below-heading {
 .input-error-msg {
   font-size: 14px;
   color: red;
+}
+
+
+/* Step 3  Styles */
+table, th, td {
+  border: 1px solid #5d8b9c;
+  border-collapse: collapse;
+}
+th {
+	background: #5d8b9c;
+  color: white;
+}
+caption {
+	padding: 5px;
+  font-size: 25px;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #eee;
 }
