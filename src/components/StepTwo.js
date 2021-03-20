@@ -13,9 +13,6 @@ const StepTwo = (props) => {
         min_z: '',
     })
 
-
-
-    
     const [csvDataError, setCsvDataError] = useState({
         max_x: '',
         min_x: '',
@@ -39,79 +36,122 @@ const StepTwo = (props) => {
         for (let key in csvData) {
             if (csvData[key] == "") {
                 errors[key] = 'Required'
+
             } else if (checkMultipleDots( csvData[key] )) {
                 errors[key] = "Input can't have multiple dots"
+
             } else if ( isNaN(csvData[key]) ) {
                 errors[key] = "Input only number."
+
             } else if ( `${csvData[key]}`.includes('.') && (countDecimals(csvData[key]) > 5)) {
                 errors[key] = "Use decimal point less than 5"
+
+            } else if ( checkIfMaxValueIsMin_Or_MinValueIsMax (key, csvData) ) {
+                const [type, keyLastChar] = key.split('_')
+                if (type === "max") {
+                    errors[key] = `Max ${keyLastChar.toUpperCase()} value is less than Min ${keyLastChar.toUpperCase()} value` 
+                } else {
+                    errors[key] = `Min ${keyLastChar.toUpperCase()} value is greater than Max ${keyLastChar.toUpperCase()} value` 
+                }
+
             } else {
                 errors[key] = ""
             }
         }
+
         console.log('errors === ', errors)
         setCsvDataError( {...errors} )
 
     }, [csvData])
 
+
+    const checkIfMaxValueIsMin_Or_MinValueIsMax = (key, obj) => {
+        const [type, keyLastChar] = key.split('_')
+        if (type === 'max') {
+            let minkey = `min_${keyLastChar}`
+            if ( parseFloat( obj[key] ) < parseFloat( obj[minkey] ) ) { // max value is less than min value
+                return true
+            }
+        }
+        let maxkey = `max_${keyLastChar}`
+        if ( parseFloat( obj[key] ) > parseFloat( obj[maxkey] ) ) { // min value is greater than max value 
+            return true
+        }
+        return false
+    }
+
+    const processCsvFile = (csvFile) => {
+        const myReader = new FileReader();
+        myReader.readAsText(csvFile);
+        myReader.onload = function(e) {
+            const textContent = myReader.result;
+            const contentRows = textContent.split('\n')
+            let csvObj = {}
+            for(let i=0; i<contentRows.length; i++) {
+                let row = contentRows[i]
+                let headings = row.split(',')
+                if (i === 0) {
+                    for(let index in headings) {
+                        csvObj [index] = {colName: `${headings[index]}`.toLowerCase(), values: []} // Sample Obj: {colName: 'kp', values:[]}
+                    }
+                } else {
+                    for(let index in headings) {
+                        if (headings[index] !== "") {
+                            csvObj[index] = {
+                                colName: csvObj[index].colName, 
+                                values: [
+                                    ...csvObj[index].values, parseFloat(headings[index]) 
+                                ]
+                            } // Sample Obj: {colName: 'kp', values:[0,1,2,3.......]} OR {colName: 'x', values:[ 22, 14, 20, 17.......]} etc. 
+                        }
+                    }
+                }
+            }
+
+            let keyByCsv = { }
+            for (let key in csvObj) {
+                keyByCsv[ csvObj[key].colName ] = csvObj[key].values.sort((a, b) => a - b)
+            }
+            console.log('keyByCsv ---------->> ', keyByCsv)
+
+            function getData(param) {
+                const [type, key] = param.split('_')
+                if (type === 'max') {
+                    return keyByCsv[key][ keyByCsv[key].length - 1 ]
+                }
+                return keyByCsv[key][0]
+            }
+            
+            let output = {
+                max_x: getData('max_x'),
+                min_x: getData('min_x'),
+        
+                max_y: getData('max_y'),
+                min_y: getData('min_y'),
+
+                max_z: getData('max_z'),
+                min_z: getData('min_z'),
+            }
+            setWholeCsvRows( keyByCsv )
+            setCsvData( output )
+        }
+    }
+
     const handleFileUpload = (event) => {
 
         const csvFile = event.target.files[0]
+        console.log('csv fileeeeeeeeeeeeeeeeee ', csvFile)
 
-        if (csvFile !== undefined) {
-            const myReader = new FileReader();
-            myReader.readAsText(csvFile);
-            myReader.onload = function(e) {
-                const textContent = myReader.result;
-                const contentRows = textContent.split('\n')
-                let csvObj = {}
-                for(let i=0; i<contentRows.length; i++) {
-                    let row = contentRows[i]
-                    let headings = row.split(',')
-                    if (i === 0) {
-                        for(let index in headings) {
-                            csvObj [index] = {colName: `${headings[index]}`.toLowerCase(), values: []} // {colName: 'kp', values:[]}
-                        }
-                    } else {
-                        for(let index in headings) {
-                            if (headings[index] !== "") {
-                                csvObj[index] = {
-                                    colName: csvObj[index].colName, 
-                                    values: [
-                                        ...csvObj[index].values, parseFloat(headings[index]) 
-                                    ]
-                                } // {colName: 'kp', values:[0,1,2,3.......]} like obj
-                            }
-                        }
-                    }
+        if (csvFile !== undefined ) {
+            try {
+                if (['application/vnd.ms-excel'].includes( csvFile.type )) {
+                    processCsvFile( csvFile )
+                } else {
+                    throw new Error('Upload the csv file.')
                 }
 
-                let keyByCsv = { }
-                for (let key in csvObj) {
-                    keyByCsv[ csvObj[key].colName ] = csvObj[key].values.sort((a, b) => a - b)
-                }
-                console.log('keyByCsv ---------->> ', keyByCsv)
-
-                function getData(param) {
-                    const [type, key] = param.split('_')
-                    if (type === 'max') {
-                        return keyByCsv[key][ keyByCsv[key].length - 1 ]
-                    }
-                    return keyByCsv[key][0]
-                }
-                
-                let output = {
-                    max_x: getData('max_x'),
-                    min_x: getData('min_x'),
-            
-                    max_y: getData('max_y'),
-                    min_y: getData('min_y'),
-
-                    max_z: getData('max_z'),
-                    min_z: getData('min_z'),
-                }
-                setWholeCsvRows( keyByCsv )
-                setCsvData( output )
+            } catch (error) {
+                alert(error)
             }
         }
 
@@ -151,15 +191,22 @@ const StepTwo = (props) => {
     }
 
     const hasInputError = (param) => {
+        
         if (checkMultipleDots(csvData[param])) {
             return true
         }
+
         if ((csvData[param] === "" || isNaN(csvData[param])) && submitClicked > 0) {
             return true
         }
         if (`${csvData[param]}`.includes('.') && (countDecimals(csvData[param]) > 5) ) {
             return true
         }
+
+        if ( checkIfMaxValueIsMin_Or_MinValueIsMax(param, csvData) ) {
+            return true
+        }
+
         return false
     } 
 
@@ -273,8 +320,6 @@ const StepTwo = (props) => {
                             {   hasInputError('min_z') && <span className="input-error-msg"> {csvDataError.min_z} </span> }
                         </div>
                     </div>
-
-
 
                     <div className="row mt-2 pb-2">
                         <input type="submit" value="Submit" />
