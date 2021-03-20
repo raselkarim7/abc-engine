@@ -12,6 +12,7 @@ const StepOne = (props) => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault()
+        event.stopPropagation()
         setSubmitClicked( submitClicked + 1)
         for (let key in project) {
             if (project[key] === "") {

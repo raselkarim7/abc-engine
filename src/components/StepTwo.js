@@ -30,7 +30,6 @@ const StepTwo = (props) => {
     useEffect(() => {
 
         let errors = {...csvDataError}
-        setSubmitClicked( submitClicked + 1)
 
         for (let key in csvData) {
             if (csvData[key] === "") {
@@ -159,6 +158,7 @@ const StepTwo = (props) => {
     }
 
     const handleFormSubmit = (event) => {
+        setSubmitClicked( submitClicked + 1 )
         event.preventDefault()
         let hasError = false
         for (let key in csvDataError) {
@@ -199,12 +199,14 @@ const StepTwo = (props) => {
     }
 
     const hasInputError = (param) => {
-        
+        if (submitClicked === 0) {
+            return false
+        }
         if (checkMultipleDots(csvData[param])) {
             return true
         }
 
-        if ((csvData[param] === "" || isNaN(csvData[param])) && submitClicked > 0) {
+        if ( csvData[param] === "" || isNaN(csvData[param]) ) {
             return true
         }
         if (`${csvData[param]}`.includes('.') && (countDecimals(csvData[param]) > 5) ) {
