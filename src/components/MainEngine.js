@@ -13,16 +13,16 @@ function MainEngine() {
   return (
     <div className="MainEngine">
         {
-          (step < 3) &&
-          <StepOne 
-            step={step} 
-            setStep={setStep} 
-            setFirstFormValues={setFirstFormValues} 
-          /> 
+          <div style={{ display: step < 3 ? 'block' : 'none'}}> 
+            <StepOne 
+              step={step} 
+              setStep={setStep} 
+              setFirstFormValues={setFirstFormValues} 
+            />
+          </div>   
         }
 
         {
-
           <div style={{ display: step === 2 ? 'block' : 'none'}}> 
             <StepTwo 
               step={step} 
@@ -31,7 +31,6 @@ function MainEngine() {
               setSecondFormValues={setSecondFormValues} 
             /> 
           </div>
-
         }
   
         {
@@ -45,7 +44,6 @@ function MainEngine() {
           />
         }
 
-        
     </div>
   );
 }

@@ -30,6 +30,7 @@ const StepTwo = (props) => {
     console.log('csvData: ', csvData)
 
     useEffect(() => {
+
         let errors = {...csvDataError}
         setSubmitClicked( submitClicked + 1)
 
@@ -60,6 +61,7 @@ const StepTwo = (props) => {
         }
 
         console.log('errors === ', errors)
+        props.setSecondFormValues( csvData )
         setCsvDataError( {...errors} )
 
     }, [csvData])
@@ -134,7 +136,6 @@ const StepTwo = (props) => {
             }
             setCsvData( output )
             props.setWholeCsvRows( keyByCsv )
-            props.setSecondFormValues( output )
         }
     }
 
@@ -230,7 +231,7 @@ const StepTwo = (props) => {
 
     return (
         <div>   
-            <div className="container mt-5">
+            <div className="container mt-5 mb-3">
             <h1 className="mt-2 mb-1 heading-one">Step 2</h1>
             <hr className="line-below-heading" />
                 <form onSubmit={handleFormSubmit}>

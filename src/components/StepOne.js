@@ -17,14 +17,12 @@ const StepOne = (props) => {
         setSubmitClicked( submitClicked + 1)
         for (let key in project) {
             if (project[key] == "") {
-                return
+                return // if field value is empty then we return, we don't need to go step 2.
             }
         }
+
         props.setFirstFormValues( project )
         props.setStep(2)
-
-        console.log('here comes the code .............')
-
     }
     const hasInputError = (param) => {
         if (project[param] === "" && submitClicked > 0) {
@@ -35,9 +33,6 @@ const StepOne = (props) => {
 
     return (
         <div>
-            {
-                JSON.stringify(project)
-            }
             <div className="container mt-5">
             <h1 className="mt-2 mb-1 heading-one">Step 1</h1>
             <hr className="line-below-heading" />

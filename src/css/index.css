@@ -247,8 +247,10 @@ th {
   color: white;
 }
 caption {
-	padding: 5px;
+  text-align: left;
+	padding: 5px 0px;
   font-size: 25px;
+  color: grey;
 }
 th, td {
   padding: 5px;
@@ -256,4 +258,9 @@ th, td {
 }
 tr:nth-child(even) {
   background-color: #eee;
+}
+
+.chard-heading {
+  font-size: 25px;
+  color: grey;
 }
