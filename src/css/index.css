@@ -90,7 +90,7 @@ input:focus, select:focus, textarea:focus {
 	outline: 1px solid #2196f3;
 }
 
-input:disabled {
+input:disabled, textarea:disabled {
   background: #e3e4e6;
 }
 

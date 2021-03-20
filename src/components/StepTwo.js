@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
     
 const StepTwo = (props) => {
 
@@ -24,10 +24,8 @@ const StepTwo = (props) => {
         min_z: '',
     })
 
-
-
     const [submitClicked, setSubmitClicked] = useState(0)
-    console.log('csvData: ', csvData)
+
 
     useEffect(() => {
 
@@ -35,7 +33,7 @@ const StepTwo = (props) => {
         setSubmitClicked( submitClicked + 1)
 
         for (let key in csvData) {
-            if (csvData[key] == "") {
+            if (csvData[key] === "") {
                 errors[key] = 'Required'
 
             } else if (checkMultipleDots( csvData[key] )) {
@@ -60,7 +58,7 @@ const StepTwo = (props) => {
             }
         }
 
-        console.log('errors === ', errors)
+        // console.log('errors === ', errors)
         props.setSecondFormValues( csvData )
         setCsvDataError( {...errors} )
 
@@ -114,7 +112,6 @@ const StepTwo = (props) => {
             for (let key in csvObj) {
                 keyByCsv[ csvObj[key].colName ] = csvObj[key].values.sort((a, b) => a - b)
             }
-            console.log('keyByCsv ---------->> ', keyByCsv)
 
             function getData(param) {
                 const [type, key] = param.split('_')
@@ -142,8 +139,6 @@ const StepTwo = (props) => {
     const handleFileUpload = (event) => {
 
         const csvFile = event.target.files[0]
-        console.log('csv fileeeeeeeeeeeeeeeeee ', csvFile)
-
         if (csvFile !== undefined ) {
             try {
                 if (['application/vnd.ms-excel'].includes( csvFile.type )) {
@@ -153,8 +148,12 @@ const StepTwo = (props) => {
                 }
 
             } catch (error) {
+                props.setWholeCsvRows({ }) // if error then
                 alert(error)
             }
+        } else {
+            props.setWholeCsvRows({ }) // if no file is selected.
+
         }
 
     }
@@ -168,15 +167,11 @@ const StepTwo = (props) => {
                 hasError = true
                 break
             }
-            console.log("msg ----> ", msg)
         }
 
         if (hasError === false) {
             props.setStep(3)
         }
-       
-        // props.setStep(2)
-        console.log('here comes the code csvDataError.............', csvDataError)
     }
 
     const checkMultipleDots = function (param) {

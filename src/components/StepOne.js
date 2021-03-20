@@ -9,14 +9,12 @@ const StepOne = (props) => {
     })
 
     const [submitClicked, setSubmitClicked] = useState(0)
-    console.log('project: ', project)
-
 
     const handleFormSubmit = (event) => {
         event.preventDefault()
         setSubmitClicked( submitClicked + 1)
         for (let key in project) {
-            if (project[key] == "") {
+            if (project[key] === "") {
                 return // if field value is empty then we return, we don't need to go step 2.
             }
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Chart from 'chart.js'
 const StepThree = (props) => {
 		let ctx = useRef (null)
@@ -9,7 +9,7 @@ const StepThree = (props) => {
 				renderChart()
 			}
 
-		}, [])
+		}, [ ])
 
 		const renderChart = () => {
 			new Chart(ctx, {
@@ -32,7 +32,9 @@ const StepThree = (props) => {
 						scales: {
 								yAxes: [{
 										ticks: {
-												beginAtZero: true
+												beginAtZero: true,
+												suggestedMax: 800000
+
 										}
 								}]
 						}
@@ -46,7 +48,7 @@ const StepThree = (props) => {
             <h1 className="mt-2 mb-1 heading-one">Result </h1>
             <hr className="line-below-heading" />
 
-            <div className="mb-3" style={{'overflow-x':'auto'}}> 
+            <div className="mb-3" style={{overflowX:'auto'}}> 
 							<table style={{width: '100%', }}>
 								<caption>Step 1 values</caption>
 								<thead> 
@@ -68,7 +70,7 @@ const StepThree = (props) => {
 							</table>
             </div>
 
-            <div className="mb-3" style={{'overflow-x':'auto'}}> 
+            <div className="mb-3" style={{overflowX:'auto'}}> 
 							<table style={{width: '100%', }}>
 								<caption>Step 2 values</caption>
 								<thead> 
