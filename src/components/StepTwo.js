@@ -163,7 +163,7 @@ const StepTwo = (props) => {
         
        
         // props.setStep(2)
-        console.log('here comes the code .............', csvDataError)
+        console.log('here comes the code csvDataError.............', csvDataError)
     }
 
     const checkMultipleDots = function (param) {
